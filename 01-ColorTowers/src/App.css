@@ -1,0 +1,53 @@
+.App {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 100vw;
+}
+.Game {
+  display: flex;
+  width: 670px;
+  height: 300px;
+  flex-direction: row;
+  background-color: gray;
+  border-color: blue;
+  border-width: 1px;
+  padding: 10px;
+  column-gap: 1px;
+  /* flex-wrap: wrap; */
+  align-items: end;
+}
+.color {
+  display: block;
+  border-color: red;
+}
+.btn {
+  display: block;
+  border-color: red;
+  /* position: relative; */
+}
+.Torre {
+  /* border-width: 10px !important; */
+  border-color: red;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: end;
+  height: 300px;
+  width: 100px;
+  background-color: rgb(179, 168, 168);
+  row-gap: 1px;
+}
+.ItemTower {
+  display: block;
+  text-align: center;
+  border-radius: 20px;
+  /* padding: 1px 20px; */
+  width: 40px;
+  height: 20px;
+}
+.ItemTower:hover {
+  cursor: pointer;
+}
