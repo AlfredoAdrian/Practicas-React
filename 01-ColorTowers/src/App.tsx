@@ -134,11 +134,11 @@ function App() {
         <h2>Color Towers</h2>
         <section className="Info">
           <div className="InfoGame">
-            Ordena los colores de tus towers para ganar el juego
+            Ordena los colores de als torres para ganar el juego
           </div>
           <div className="TowersInfo">
-            <p>Number of towers: {numberTowers}</p>
-            <p>Height of towers: {heigthtowers}</p>
+            <p>Numero de Torres: {numberTowers}</p>
+            <p>Máxima Altura de las Torres: {heigthtowers}</p>
           </div>
           <div className="ButtonsGame">
             <button onClick={resetGame}>Reset Game</button>
@@ -147,7 +147,7 @@ function App() {
             </button>
           </div>
           <div className="ItemActualinfo">
-            Color Actual
+            Color seleccionado actual
             <div
               className="SquareColor"
               style={{ backgroundColor: itemSelected.color }}
