@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import "./App.css";
 
-const colors = ["red", "orange", "yellow", "green", "blue", "pink"];
+// const colors = ["red", "orange", "yellow", "green", "blue", "pink"];
 const heigthtowers = 15;
 const numberTowers = 7;
 
@@ -37,9 +37,14 @@ const Tower = ({ colores, indexTower, updateItemSelected }) => {
 };
 
 function App() {
+  // const itemSelected = useRef({ index: null, color: null, tower: null });
   const [Towers, setTowers] = useState([]);
-  const [itemSelected, setItemSelected] = useState({});
   const [InitEmptyColumn, setInitEmptyColumn] = useState(1);
+  const [itemSelected, setItemSelected] = useState({
+    index: null,
+    color: null,
+    tower: null,
+  });
 
   // Metodos
   const generateinitialEmptyColumn = () => {
@@ -47,19 +52,36 @@ function App() {
     setInitEmptyColumn(randomEmptyColumn);
   };
   const createtowers = () => {
+    let colores_diponibles: any = [
+      { color: "red", restantes: 10 },
+      { color: "orange", restantes: 10 },
+      { color: "yellow", restantes: 10 },
+      { color: "green", restantes: 10 },
+      { color: "blue", restantes: 10 },
+      { color: "pink", restantes: 10 },
+    ];
     let randomColorToewers: any = [];
     for (let i = 0; i < numberTowers; i++) {
       let newTowerColor = Array(heigthtowers).fill(null);
       if (i !== InitEmptyColumn) {
-        newTowerColor = newTowerColor.map((e) => {
-          return colors[Math.floor(Math.random() * colors.length)];
+        newTowerColor = newTowerColor.map((new_color) => {
+          let restantes = colores_diponibles.filter((e) => e.restantes > 0);
+          if (restantes.length === 0) return null;
+          let randomColor =
+            restantes[Math.floor(Math.random() * restantes.length)];
+          randomColor.restantes--;
+          if (randomColor.restantes === 0)
+            colores_diponibles = colores_diponibles.filter(
+              (e) => e.color !== randomColor.color
+            );
+          return randomColor.color;
         });
       }
       randomColorToewers = [...randomColorToewers, newTowerColor];
     }
     setTowers(randomColorToewers);
   };
-  const updatetowerSelected = (oldaItem: any, newItem: any) => {
+  const updatetowerSelected = (oldItem: any, newItem: any) => {
     let newTowers = [...Towers];
     let hasEmptyPosition = newTowers[newItem.tower].some((t) => t === null);
     if (hasEmptyPosition) {
@@ -67,20 +89,20 @@ function App() {
         (t) => t === null
       );
       if (emptyColumnIndex === 0) {
-        newTowers[oldaItem.tower][oldaItem.index] = null;
-        newTowers[newItem.tower][emptyColumnIndex] = oldaItem.color;
+        newTowers[oldItem.tower][oldItem.index] = null;
+        newTowers[newItem.tower][emptyColumnIndex] = oldItem.color;
       } else {
         let previusColor = newTowers[newItem.tower][emptyColumnIndex - 1];
-        if (previusColor === oldaItem.color) {
-          newTowers[oldaItem.tower][oldaItem.index] = null;
-          newTowers[newItem.tower][emptyColumnIndex] = oldaItem.color;
+        if (previusColor === oldItem.color) {
+          newTowers[oldItem.tower][oldItem.index] = null;
+          newTowers[newItem.tower][emptyColumnIndex] = oldItem.color;
         } else {
-          setItemSelected({});
+          setItemSelected({ index: null, color: null, tower: null });
           return;
         }
       }
       setTowers(newTowers);
-      setItemSelected({});
+      setItemSelected({ index: null, color: null, tower: null });
     } else return;
   };
   const updateItemSelected = (item: any) => {
@@ -94,14 +116,13 @@ function App() {
   };
   const resetGame = () => {
     createtowers();
-    setItemSelected({});
+    setItemSelected({ index: null, color: null, tower: null });
   };
 
   // efectos
   useEffect(() => {
     generateinitialEmptyColumn();
     createtowers();
-    setItemSelected({});
   }, []);
   useEffect(() => {
     console.log("Elemento seleccionado: ", itemSelected);
