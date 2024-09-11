@@ -137,13 +137,13 @@ function App() {
             Ordena los colores de als torres para ganar el juego
           </div>
           <div className="TowersInfo">
-            <p>Numero de Torres: {numberTowers}</p>
-            <p>Máxima Altura de las Torres: {heigthtowers}</p>
+            <p>Numero de pilas: {numberTowers}</p>
+            <p>altura máxima: {heigthtowers}</p>
           </div>
           <div className="ButtonsGame">
-            <button onClick={resetGame}>Reset Game</button>
+            <button onClick={resetGame}></button>
             <button onClick={generateinitialEmptyColumn}>
-              Change Empty Column
+              cambiar columna vacia inicial
             </button>
           </div>
           <div className="ItemActualinfo">
