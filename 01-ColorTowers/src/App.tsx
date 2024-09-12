@@ -141,7 +141,7 @@ function App() {
             <p>altura máxima: {heigthtowers}</p>
           </div>
           <div className="ButtonsGame">
-            <button onClick={resetGame}></button>
+            <button onClick={resetGame}>Reset</button>
             <button onClick={generateinitialEmptyColumn}>
               cambiar columna vacia inicial
             </button>
