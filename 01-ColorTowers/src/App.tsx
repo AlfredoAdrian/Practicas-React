@@ -37,7 +37,7 @@ const Tower = ({ colores, indexTower, updateItemSelected }) => {
 };
 
 function App() {
-  // const itemSelected = useRef({ index: null, color: null, tower: null });
+  const [FinDeljuego, setFinDeljuego] = useState(false);
   const [Towers, setTowers] = useState([]);
   const [InitEmptyColumn, setInitEmptyColumn] = useState(1);
   const [itemSelected, setItemSelected] = useState({
@@ -47,6 +47,24 @@ function App() {
   });
 
   // Metodos
+  const finishGame = () => {
+    let win = true;
+    Towers.forEach((tower, index) => {
+      let valoresTower = tower.filter((color) => color !== null);
+      if (valoresTower.length > 0) {
+        if (valoresTower.length < 10) {
+          win = false;
+        } else {
+          if (valoresTower.some((color) => color !== valoresTower[0])) {
+            win = false;
+          }
+        }
+      }
+    });
+    if (win) {
+      setFinDeljuego(win);
+    }
+  };
   const generateinitialEmptyColumn = () => {
     let randomEmptyColumn = Math.floor(Math.random() * numberTowers);
     setInitEmptyColumn(randomEmptyColumn);
@@ -103,6 +121,7 @@ function App() {
       }
       setTowers(newTowers);
       setItemSelected({ index: null, color: null, tower: null });
+      finishGame();
     } else return;
   };
   const updateItemSelected = (item: any) => {
@@ -115,18 +134,17 @@ function App() {
     setItemSelected(item);
   };
   const resetGame = () => {
+    setFinDeljuego(false);
     createtowers();
     setItemSelected({ index: null, color: null, tower: null });
   };
 
   // efectos
   useEffect(() => {
+    setFinDeljuego(false);
     generateinitialEmptyColumn();
     createtowers();
   }, []);
-  useEffect(() => {
-    console.log("Elemento seleccionado: ", itemSelected);
-  }, [itemSelected]);
 
   return (
     <>
@@ -147,24 +165,29 @@ function App() {
             </button>
           </div>
           <div className="ItemActualinfo">
-            Color seleccionado actual
+            {FinDeljuego ? <p>has ganado</p> : null}
+            <p>Color seleccionado actual</p>
             <div
               className="SquareColor"
               style={{ backgroundColor: itemSelected.color }}
             ></div>
           </div>
         </section>
-        <section className="Game">
-          {Towers.map((row, index) => {
-            return (
-              <Tower
-                colores={row}
-                indexTower={index}
-                updateItemSelected={updateItemSelected}
-              />
-            );
-          })}
-        </section>
+        {!FinDeljuego ? (
+          <section className="Game">
+            {Towers.map((row, index) => {
+              return (
+                <Tower
+                  colores={row}
+                  indexTower={index}
+                  updateItemSelected={updateItemSelected}
+                />
+              );
+            })}
+          </section>
+        ) : (
+          <section>fin del juego</section>
+        )}
       </main>
     </>
   );
