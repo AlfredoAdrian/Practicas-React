@@ -25,6 +25,7 @@ const Tower = ({ colores, indexTower, updateItemSelected }) => {
       {colores.reverse().map((color: any, index: any) => {
         return (
           <Item
+            key={index}
             color={color}
             index={index}
             tower={indexTower}
@@ -178,6 +179,7 @@ function App() {
             {Towers.map((row, index) => {
               return (
                 <Tower
+                  key={index}
                   colores={row}
                   indexTower={index}
                   updateItemSelected={updateItemSelected}
